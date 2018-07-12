@@ -1,0 +1,1 @@
+x := 84; y := 36;write x const :- ; ; b := y; multiply(x,y)var writeln;3.14E+10 .14E+10 3E+10while r := r-w; ) q := q+1end beginq := ---- 2*q; w := writeend;x; q :=n; ; ; return ; y := ,y); writeln;write begin if x<y multiply ( thenif then <> <> <> ------ +++++return = 85;

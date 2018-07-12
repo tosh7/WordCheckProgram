@@ -72,6 +72,41 @@ static struct keyWd KeyWdT[] = {	/*　予約語や記号と名前(KeyId)の表�
 	{"$dummy2",end_of_KeySym}
 };
 
+static struct keyWd result[] = {	/*　予約語や記号と名前(KeyId)の表　*/
+	{"begin", Begin},
+	{"end", End},
+	{"if", If},
+	{"then", Then},
+	{"while", While},
+	{"do", Do},
+	{"return", Ret},
+	{"function", Func},
+	{"var", Var},
+	{"const", Const},
+	{"odd", Odd},
+	{"write", Write},
+	{"writeln",WriteLn},
+	{"$dummy1",end_of_KeyWd},
+							/*　記号と名前(KeyId)の表　*/
+	{"Plus", Plus},
+	{"Minus", Minus},
+	{"Mult", Mult},
+	{"Div", Div},
+	{"Lparen", Lparen},
+	{"Rparen", Rparen},
+	{"Equal", Equal},
+	{"Lss", Lss},
+	{"Gtr", Gtr},
+	{"NotEq", NotEq},
+	{"LssEq", LssEq},
+	{"GtrEq", GtrEq},
+	{"Comma", Comma},
+	{"Period", Period},
+	{"Semicolon", Semicolon},
+	{"Assign", Assign},
+	{"end_of_KeySym::",end_of_KeySym}
+};
+
 int isKeyWd(KeyId k)			/*　キーkは予約語か？　*/
 {
 	return (k < end_of_KeyWd);
@@ -410,27 +445,31 @@ void printcToken()				/*　現在のトークンの印字　*/
 	printed = 1;
 	printSpaces();				/*　トークンの前の空白や改行印字　*/
 	if (i < end_of_KeyWd) 						/*　予約語　*/
-		fprintf(fptex, "<b>%s</b>", KeyWdT[i].word);
+		printf("%s  %s\n", KeyWdT[i].word, result[i].word);
 		/* fprintf(fptex, "{\\bf %s}", KeyWdT[i].word); */
 	else if (i < end_of_KeySym)					/*　演算子か区切り記号　*/
-		fprintf(fptex, "%s", KeyWdT[i].word);
+		printf("%s  %s\n", KeyWdT[i].word, result[i].word);
 		/* fprintf(fptex, "$%s$", KeyWdT[i].word); */
 	else if (i==(int)Id){							/*　Identfier　*/
 		switch (idKind) {
 		case varId: 
-			fprintf(fptex, "%s", cToken.u.id); return;
+			printf("%s  var\n", cToken.u.id); 
+			return;
 		case parId: 
-			fprintf(fptex, "<i>%s</i>", cToken.u.id); return;
+			printf( "%s  par\n", cToken.u.id); 
+			return;
 			/* fprintf(fptex, "{\\sl %s}", cToken.u.id); return; */
 		case funcId: 
-			fprintf(fptex, "<i>%s</i>", cToken.u.id); return;
+			printf( "%s   func\n", cToken.u.id); 
+			return;
 			/* fprintf(fptex, "{\\it %s}", cToken.u.id); return; */
 		case constId: 
-			fprintf(fptex, "<tt>%s</tt>", cToken.u.id); return;
+			printf( "%s  construction\n", cToken.u.id); 
+			return;
 			/* fprintf(fptex, "{\\sf %s}", cToken.u.id); return; */
 		}
 	}else if (i==(int)Num)			/*　Num　*/
-		fprintf(fptex, "%d", cToken.u.value);
+		printf( "%d  number\n", cToken.u.value);
 }
 
 void setIdKind (KindT k)			/*　現トークン(Id)の種類をセット　*/
